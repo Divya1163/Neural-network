@@ -1,0 +1,223 @@
+/* Perceptron Page Styles */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+    color: var(--primary-green);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: var(--primary-green-dark);
+}
+
+/* Sections */
+.section {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.625rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.section-content {
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.section-content p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.section-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Steps Grid */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.step-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.step-card:hover {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.05);
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-green-light));
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.step-card h3 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.step-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Characteristics List */
+.characteristics-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.characteristic-item {
+    background-color: var(--bg-secondary);
+    border-left: 3px solid var(--primary-green);
+    padding: 1.25rem;
+    border-radius: 0.25rem;
+}
+
+.characteristic-item h4 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.characteristic-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Applications List */
+.applications-list,
+.limitations-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.applications-list li,
+.limitations-list li {
+    padding: 0.75rem 0 0.75rem 2rem;
+    position: relative;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.applications-list li::before,
+.limitations-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-green);
+    font-weight: 700;
+}
+
+.limitations-list li::before {
+    content: '●';
+}
+
+/* Resources Grid */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.resource-link {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.resource-link:hover {
+    background-color: var(--primary-green);
+    color: white;
+    border-color: var(--primary-green);
+}
+
+.resource-link svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+}
+
+.resource-link:hover svg {
+    transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .characteristics-list {
+        grid-template-columns: 1fr;
+    }
+
+    .resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header h2 {
+        font-size: 1.25rem;
+    }
+}
