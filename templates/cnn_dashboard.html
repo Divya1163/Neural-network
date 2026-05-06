@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNN Learning Lab - Deep LearnX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cnn-dashboard.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-mark">DX</div>
+                <div class="logo-text">Deep LearnX</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <div class="menu-section">
+                <div class="menu-title">Navigation</div>
+                <a href="/" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"></path>
+                    </svg>
+                    <span class="menu-label">Dashboard</span>
+                </a>
+                <a href="/perceptron" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                        <line x1="12" y1="6" x2="12" y2="11"></line>
+                        <line x1="12" y1="13" x2="12" y2="18"></line>
+                    </svg>
+                    <span class="menu-label">Perceptrons</span>
+                </a>
+                <a href="/backpropogation" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h10"></path>
+                        <path d="M4 17h7"></path>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                    <span class="menu-label">Backpropagation</span>
+                </a>
+                <a href="/mlp" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="6" r="2"></circle>
+                        <circle cx="18" cy="6" r="2"></circle>
+                        <circle cx="6" cy="18" r="2"></circle>
+                        <circle cx="18" cy="18" r="2"></circle>
+                        <line x1="8" y1="6" x2="16" y2="6"></line>
+                        <line x1="6" y1="8" x2="6" y2="16"></line>
+                        <line x1="18" y1="8" x2="18" y2="16"></line>
+                        <line x1="8" y1="18" x2="16" y2="18"></line>
+                        <line x1="8" y1="8" x2="16" y2="16"></line>
+                    </svg>
+                    <span class="menu-label">MLP Studio</span>
+                </a>
+                <a href="/activation_functions" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 17c3-6 6-10 9-10s6 4 9 10"></path>
+                        <path d="M3 17h18"></path>
+                        <circle cx="12" cy="7" r="1"></circle>
+                    </svg>
+                    <span class="menu-label">Activation Functions</span>
+                </a>
+                <a href="/digit_detection" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <path d="M7 7h.01"></path>
+                        <path d="M11 7h.01"></path>
+                        <path d="M15 7h.01"></path>
+                        <path d="M7 11h.01"></path>
+                        <path d="M11 11h.01"></path>
+                        <path d="M15 11h.01"></path>
+                        <path d="M7 15h.01"></path>
+                        <path d="M11 15h.01"></path>
+                        <path d="M15 15h.01"></path>
+                    </svg>
+                    <span class="menu-label">Digit Detection</span>
+                </a>
+                <a href="/cnn" class="menu-item active">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="menu-label">CNN</span>
+                </a>
+                <a href="/opencv_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="8" height="8"></rect>
+                        <rect x="13" y="3" width="8" height="8"></rect>
+                        <rect x="8" y="13" width="8" height="8"></rect>
+                    </svg>
+                    <span class="menu-label">Objects Detection</span>
+                </a>
+                <a href="/rnn_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="12" r="2"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                        <path d="M8 12h4M14 12h4"></path>
+                    </svg>
+                    <span class="menu-label">RNN Training</span>
+                </a>
+                <a href="/sentiment_analysis" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                        <circle cx="8" cy="11" r="1.5"></circle>
+                        <circle cx="16" cy="11" r="1.5"></circle>
+                        <path d="M8 15c.5 1.5 2 2.5 4 2.5s3.5-1 4-2.5"></path>
+                    </svg>
+                    <span class="menu-label">Sentiment Analysis</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Explore CNN concepts...">
+            </div>
+            <div class="topbar-actions">
+                <button class="icon-btn" title="Documentation">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="page-header dashboard-header">
+            <div>
+                <h1>CNN Learning Lab</h1>
+                <p>Understand how convolutional neural networks process images and build your own architecture step by step.</p>
+            </div>
+        </div>
+
+        <div class="content-wrapper dashboard-wrapper">
+            <section class="intro-strip">
+                <div class="intro-card">
+                    <h3>What is a CNN?</h3>
+                    <p>A Convolutional Neural Network is a deep learning model specialized for image-like data. It automatically learns useful visual features such as edges, textures, and shapes.</p>
+                </div>
+                <div class="intro-card">
+                    <h3>Why is CNN used?</h3>
+                    <p>CNNs reduce parameters with shared filters, preserve spatial information, and achieve strong performance in image classification, object detection, segmentation, and medical imaging.</p>
+                </div>
+            </section>
+
+            <section class="cnn-cards-grid">
+                <article class="cnn-card" data-modal-target="modal-convolution">
+                    <div class="cnn-card-head">
+                        <h3>Experience Convolution</h3>
+                        <span class="card-tag">Interactive Demo</span>
+                    </div>
+                    <p>Upload an image and watch convolution step by step with live equations and pixel-level inspection. Click to launch.</p>
+                    <ul>
+                        <li>224/28 resize toggle + preprocessing preview</li>
+                        <li>Pauseable kernel sliding animation</li>
+                        <li>Why? explanation + downloadable outputs</li>
+                    </ul>
+                </article>
+
+                <article class="cnn-card" data-modal-target="modal-builder">
+                    <div class="cnn-card-head">
+                        <h3>CNN Builder</h3>
+                        <span class="card-tag">Interactive Tool</span>
+                    </div>
+                    <p>Create a CNN configuration and inspect the shape flow and a visual diagram of the architecture. Click to launch.</p>
+                    <ul>
+                        <li>Visual architecture diagram</li>
+                        <li>Layer output shape calculation</li>
+                        <li>Estimated parameter count</li>
+                    </ul>
+                </article>
+
+                <article class="cnn-card" data-modal-target="modal-understanding-images">
+                    <div class="cnn-card-head">
+                        <h3>Understanding Images</h3>
+                        <span class="card-tag">Foundations</span>
+                    </div>
+                    <p>Open an image-first CNN lab with preprocessing, kernel animation, and feature-map learning controls.</p>
+                    <ul>
+                        <li>Edge/blur/sharpen/random/custom kernels</li>
+                        <li>Stride, padding, and filter count sliders</li>
+                        <li>Live patch math and feature-map updates</li>
+                    </ul>
+                </article>
+
+                <article class="cnn-card" data-modal-target="modal-architectures">
+                    <div class="cnn-card-head">
+                        <h3>CNN Architectures</h3>
+                        <span class="card-tag">Design Patterns</span>
+                    </div>
+                    <p>Explore famous CNN families, understand when to use each one, and get guided help to design your own architecture.</p>
+                    <ul>
+                        <li>LeNet, AlexNet, VGG, ResNet, EfficientNet</li>
+                        <li>Theory, working flow, strengths and trade-offs</li>
+                        <li>Real-world use cases and design advisor</li>
+                    </ul>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <!-- Convolution Modal -->
+    <div id="modal-convolution" class="modal">
+        <div class="modal-content modal-content-wide">
+            <span class="close-button">&times;</span>
+            <h2>Experience Convolution</h2>
+            <p>Upload an image, inspect preprocessing, and watch a kernel sweep across the image with live math.</p>
+
+            <div class="convolution-lab">
+                <section class="conv-toolbar demo-panel">
+                    <div class="toolbar-row">
+                        <div class="toolbar-group">
+                            <label for="conv-upload">Upload Image</label>
+                            <input id="conv-upload" type="file" accept="image/*">
+                        </div>
+                        <div class="toolbar-group">
+                            <label>Or Use Example</label>
+                            <div class="toolbar-buttons">
+                                <button id="example-cat" class="btn btn-secondary" type="button">Example A</button>
+                                <button id="example-shape" class="btn btn-secondary" type="button">Example B</button>
+                            </div>
+                        </div>
+                        <div class="toolbar-group">
+                            <label for="size-toggle">Resize Target</label>
+                            <select id="size-toggle">
+                                <option value="28">28 x 28</option>
+                                <option value="224" selected>224 x 224</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-group">
+                            <label for="layer-select">Concept / Layer</label>
+                            <select id="layer-select">
+                                <option value="edge">Edge Detector</option>
+                                <option value="blur">Blur Filter</option>
+                                <option value="sharpen">Sharpen Filter</option>
+                                <option value="emboss">Emboss Filter</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="toolbar-row compact">
+                        <button id="next-step" class="btn btn-secondary" type="button">Next Step -&gt;</button>
+                        <button id="animate-conv" class="btn btn-primary" type="button">Play Animation</button>
+                        <button id="pause-conv" class="btn btn-secondary" type="button">Pause</button>
+                        <button id="why-open" class="btn btn-secondary" type="button">Why?</button>
+                    </div>
+                </section>
+
+                <section class="preprocess-grid">
+                    <div class="demo-panel">
+                        <h4>Raw Tensor (H x W x C)</h4>
+                        <p id="raw-shape" class="mini-meta">Loading...</p>
+                        <div class="tensor-preview" id="raw-tensor-preview"></div>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Normalized Tensor</h4>
+                        <p id="norm-shape" class="mini-meta">Loading...</p>
+                        <div class="tensor-preview" id="norm-tensor-preview"></div>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Live Equation</h4>
+                        <p id="equation-line" class="equation-line">output = sum(input_patch * kernel)</p>
+                        <p id="equation-value" class="mini-meta">Waiting for animation...</p>
+                    </div>
+                </section>
+
+                <section class="vision-grid">
+                    <div class="demo-panel">
+                        <h4>Original</h4>
+                        <canvas id="original-canvas" width="224" height="224"></canvas>
+                        <button id="download-original" class="btn btn-secondary btn-small" type="button">Download</button>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Current Layer Output</h4>
+                        <canvas id="feature-canvas" width="224" height="224"></canvas>
+                        <button id="download-feature" class="btn btn-secondary btn-small" type="button">Download</button>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Heatmap Overlay</h4>
+                        <canvas id="heatmap-canvas" width="224" height="224"></canvas>
+                        <button id="download-heatmap" class="btn btn-secondary btn-small" type="button">Download</button>
+                    </div>
+                </section>
+
+                <section class="demo-panel">
+                    <h4>Pixel Inspector</h4>
+                    <p id="pixel-inspector" class="mini-meta">Hover over any pixel in Original / Output / Heatmap to inspect values.</p>
+                </section>
+
+                <section class="demo-panel">
+                    <h4>Tech Under the Hood</h4>
+                    <p class="mini-meta">Production stack suggestion for full model introspection:</p>
+                    <ul class="arch-list">
+                        <li>Preprocessing with torchvision.transforms (resize, tensor conversion, normalization)</li>
+                        <li>Forward hooks on CNN layers to capture intermediate activations</li>
+                        <li>Plotly/Matplotlib for interactive tensor and activation visualizations</li>
+                        <li>Gradio or Streamlit components for upload, gallery, controls, and stepwise interaction</li>
+                    </ul>
+                </section>
+
+                <div id="why-popup" class="why-popup" aria-hidden="true">
+                    <div class="why-content">
+                        <h4>Why This Matters</h4>
+                        <p><strong>Plain English:</strong> A convolution filter scans small neighborhoods and highlights useful patterns like edges or texture.</p>
+                        <p><strong>Math:</strong> y(i,j) = sum(sum(x(i+m, j+n) * k(m,n))).</p>
+                        <p><strong>Real-world analogy:</strong> Think of a stencil moving over a photo. At each position it scores how strongly a pattern appears.</p>
+                        <button id="why-close" class="btn btn-secondary" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Understanding Images Modal -->
+    <div id="modal-understanding-images" class="modal">
+        <div class="modal-content modal-content-wide">
+            <span class="close-button">&times;</span>
+            <h2>Understanding Images in CNN</h2>
+            <p>See how an image becomes a tensor, how preprocessing changes values, and how kernels create feature maps in real time.</p>
+
+            <div class="img-lab">
+                <section class="demo-panel chat-assistant-panel">
+                    <h4>CNN Guide Assistant</h4>
+                    <p class="mini-meta">A beginner-friendly, chatbot-style guide that asks one thing at a time and explains why it matters.</p>
+                    <div id="imglab-chat-thread" class="chat-thread"></div>
+                    <div id="imglab-chat-choices" class="chat-choices"></div>
+                    <div class="chat-actions">
+                        <button id="imglab-chat-start" class="btn btn-primary" type="button">Start Guided Setup</button>
+                        <button id="imglab-chat-reset" class="btn btn-secondary" type="button">Reset Guide</button>
+                    </div>
+                </section>
+
+                <section class="demo-panel learning-story">
+                    <h4>Start Here: What You Are Learning</h4>
+                    <div class="story-grid">
+                        <div class="story-step">
+                            <span class="step-pill">Step 1</span>
+                            <h5>Image -> Tensor</h5>
+                            <p>We convert your image into numbers so the model can process it mathematically.</p>
+                        </div>
+                        <div class="story-step">
+                            <span class="step-pill">Step 2</span>
+                            <h5>Kernel Scans Patches</h5>
+                            <p>A small 3x3 kernel slides over local regions to detect patterns like edges or textures.</p>
+                        </div>
+                        <div class="story-step">
+                            <span class="step-pill">Step 3</span>
+                            <h5>Feature Map is Built</h5>
+                            <p>The output map highlights where the selected visual pattern appears strongly.</p>
+                        </div>
+                    </div>
+                    <p id="imglab-live-context" class="mini-meta context-banner">Choose a preset to begin with guided defaults.</p>
+                </section>
+
+                <section class="demo-panel preset-panel">
+                    <h4>Guided Presets (Recommended for Beginners)</h4>
+                    <div class="preset-buttons">
+                        <button id="preset-edges" class="btn btn-secondary" type="button">Find Edges in Digit</button>
+                        <button id="preset-smooth" class="btn btn-secondary" type="button">Smooth Noise (Blur)</button>
+                        <button id="preset-sharpen" class="btn btn-secondary" type="button">Enhance Strokes (Sharpen)</button>
+                    </div>
+                </section>
+
+                <section class="demo-panel">
+                    <h4>Parameter Impact Preview</h4>
+                    <ul id="imglab-impact-list" class="arch-list">
+                        <li><strong>Resize:</strong> 224 x 224 keeps rich details for feature learning.</li>
+                        <li><strong>Kernel:</strong> Edge detection highlights boundaries and shape contours.</li>
+                        <li><strong>Stride:</strong> 1 scans every location for full detail.</li>
+                        <li><strong>Padding:</strong> 1 preserves border information.</li>
+                        <li><strong>Filters:</strong> 1 filter means one type of pattern detector.</li>
+                        <li><strong>Preprocessing:</strong> Normalize stabilizes responses across brightness changes.</li>
+                    </ul>
+                </section>
+
+                <section class="demo-panel img-lab-toolbar">
+                    <h4>Advanced Controls (Optional)</h4>
+                    <div class="toolbar-row">
+                        <div class="toolbar-group">
+                            <label for="imglab-upload">Upload Image</label>
+                            <input id="imglab-upload" type="file" accept="image/*">
+                        </div>
+                        <div class="toolbar-group">
+                            <label for="imglab-size">Resize</label>
+                            <select id="imglab-size">
+                                <option value="28">28 x 28</option>
+                                <option value="224" selected>224 x 224</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-group">
+                            <label for="imglab-preprocess">Preprocessing</label>
+                            <select id="imglab-preprocess">
+                                <option value="normalize" selected>Normalize (mean/std)</option>
+                                <option value="minmax">Min-Max</option>
+                                <option value="invert">Invert</option>
+                                <option value="threshold">Threshold</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-group">
+                            <label for="imglab-kernel">Kernel</label>
+                            <select id="imglab-kernel">
+                                <option value="edge detection" selected>Edge detection</option>
+                                <option value="blur">Blur</option>
+                                <option value="sharpen">Sharpen</option>
+                                <option value="random">Random</option>
+                                <option value="custom">Draw your own 3x3 kernel</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-row">
+                        <div class="toolbar-group">
+                            <label for="imglab-stride">Stride: <span id="imglab-stride-value">1</span></label>
+                            <input id="imglab-stride" type="range" min="1" max="4" value="1">
+                        </div>
+                        <div class="toolbar-group">
+                            <label for="imglab-padding">Padding: <span id="imglab-padding-value">1</span></label>
+                            <input id="imglab-padding" type="range" min="0" max="4" value="1">
+                        </div>
+                        <div class="toolbar-group">
+                            <label for="imglab-filters">Number of Filters: <span id="imglab-filters-value">1</span></label>
+                            <input id="imglab-filters" type="range" min="1" max="6" value="1">
+                        </div>
+                    </div>
+
+                    <div class="toolbar-row compact">
+                        <button id="imglab-run" class="btn btn-primary" type="button">Run Convolution</button>
+                        <button id="imglab-play" class="btn btn-secondary" type="button">Play</button>
+                        <button id="imglab-pause" class="btn btn-secondary" type="button">Pause</button>
+                        <button id="imglab-next" class="btn btn-secondary" type="button">Next Step -&gt;</button>
+                    </div>
+
+                    <div class="term-grid">
+                        <div class="term-card">
+                            <h6>What is Stride?</h6>
+                            <p>Stride is how far the kernel jumps each move. Bigger stride = faster scan, less detail.</p>
+                        </div>
+                        <div class="term-card">
+                            <h6>What is Padding?</h6>
+                            <p>Padding adds border pixels so edges are not ignored and output size can stay larger.</p>
+                        </div>
+                        <div class="term-card">
+                            <h6>What is Number of Filters?</h6>
+                            <p>Each filter learns a different visual detector, so more filters capture more patterns.</p>
+                        </div>
+                    </div>
+
+                    <div id="imglab-custom-kernel" class="custom-kernel-grid hidden">
+                        <label>Custom 3x3 Kernel</label>
+                        <div class="kernel-input-grid" id="imglab-kernel-grid">
+                            <input type="number" step="0.1" value="0">
+                            <input type="number" step="0.1" value="-1">
+                            <input type="number" step="0.1" value="0">
+                            <input type="number" step="0.1" value="-1">
+                            <input type="number" step="0.1" value="5">
+                            <input type="number" step="0.1" value="-1">
+                            <input type="number" step="0.1" value="0">
+                            <input type="number" step="0.1" value="-1">
+                            <input type="number" step="0.1" value="0">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="preprocess-grid">
+                    <div class="demo-panel">
+                        <h4>Raw Tensor (H x W x C)</h4>
+                        <p id="imglab-raw-shape" class="mini-meta">No image loaded yet.</p>
+                        <div id="imglab-raw-preview" class="tensor-preview"></div>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Preprocessed Tensor</h4>
+                        <p id="imglab-pre-shape" class="mini-meta">No preprocessing applied yet.</p>
+                        <div id="imglab-pre-preview" class="tensor-preview"></div>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Patch Math</h4>
+                        <p id="imglab-equation" class="equation-line">output(i, j) = sum(input_patch * kernel)</p>
+                        <p id="imglab-equation-sum" class="mini-meta">Run and play to see live multiplication details.</p>
+                        <p id="imglab-payoff" class="mini-meta">Learning payoff: kernels transform raw pixels into useful patterns for downstream CNN layers.</p>
+                    </div>
+                </section>
+
+                <section class="vision-grid">
+                    <div class="demo-panel">
+                        <h4>Original Image</h4>
+                        <canvas id="imglab-original" width="224" height="224"></canvas>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Preprocessed</h4>
+                        <canvas id="imglab-preprocessed" width="224" height="224"></canvas>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Live Feature Map</h4>
+                        <canvas id="imglab-feature" width="224" height="224"></canvas>
+                    </div>
+                    <div class="demo-panel">
+                        <h4>Heatmap</h4>
+                        <canvas id="imglab-heatmap" width="224" height="224"></canvas>
+                    </div>
+                </section>
+
+                <section class="demo-panel">
+                    <h4>Feature Maps Gallery</h4>
+                    <div id="imglab-gallery" class="feature-gallery"></div>
+                </section>
+
+                <section class="demo-panel">
+                    <h4>How to Read These Results</h4>
+                    <ul id="imglab-result-guide" class="arch-list">
+                        <li><strong>Original:</strong> your input image as pixel values.</li>
+                        <li><strong>Preprocessed:</strong> normalized/transformed values before convolution.</li>
+                        <li><strong>Feature map:</strong> where your chosen pattern is detected.</li>
+                        <li><strong>Heatmap:</strong> warm colors mean stronger activation.</li>
+                    </ul>
+                    <p id="imglab-use-case" class="mini-meta">Use case: Edge maps help early CNN layers detect boundaries before higher layers learn shapes.</p>
+                </section>
+
+                <section class="demo-panel">
+                    <h4>Pixel Inspector</h4>
+                    <p id="imglab-inspector" class="mini-meta">Hover over Original or Feature map to inspect exact values.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- CNN Architectures Modal -->
+    <div id="modal-architectures" class="modal">
+        <div class="modal-content modal-content-wide">
+            <span class="close-button">&times;</span>
+            <h2>CNN Architectures Studio</h2>
+            <p>Learn architecture families visually, understand why they work, and get guided recommendations for building your own CNN.</p>
+
+            <div class="architectures-lab">
+                <section class="demo-panel arch-hero">
+                    <h4>How CNN Architectures Evolved</h4>
+                    <div class="arch-timeline">
+                        <div class="arch-node"><span>1998</span><strong>LeNet</strong><p>Simple digit recognition pipeline.</p></div>
+                        <div class="arch-node"><span>2012</span><strong>AlexNet</strong><p>Deep learning breakthrough in ImageNet.</p></div>
+                        <div class="arch-node"><span>2014</span><strong>VGG</strong><p>Stacked 3x3 conv blocks, clean design.</p></div>
+                        <div class="arch-node"><span>2015</span><strong>ResNet</strong><p>Skip connections for very deep nets.</p></div>
+                        <div class="arch-node"><span>2019</span><strong>EfficientNet</strong><p>Best accuracy-efficiency scaling.</p></div>
+                    </div>
+                </section>
+
+                <section class="arch-main-grid">
+                    <div class="demo-panel arch-model-list">
+                        <h4>Model Explorer</h4>
+                        <p class="mini-meta">Pick a model family to learn its theory and practical usage.</p>
+                        <div id="arch-model-chips" class="arch-chip-list"></div>
+                    </div>
+
+                    <div class="demo-panel arch-model-details">
+                        <h4 id="arch-model-title">Select an architecture</h4>
+                        <p id="arch-model-tagline" class="mini-meta">You will see theory, working mechanism, and ideal scenarios here.</p>
+
+                        <div class="arch-detail-grid">
+                            <div>
+                                <h5>Theory</h5>
+                                <p id="arch-model-theory" class="mini-meta"></p>
+                            </div>
+                            <div>
+                                <h5>How It Works</h5>
+                                <p id="arch-model-working" class="mini-meta"></p>
+                            </div>
+                            <div>
+                                <h5>Strengths</h5>
+                                <ul id="arch-model-strengths" class="arch-list"></ul>
+                            </div>
+                            <div>
+                                <h5>Trade-Offs</h5>
+                                <ul id="arch-model-tradeoffs" class="arch-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="demo-panel">
+                    <h4>Best Real-World Use Cases</h4>
+                    <div id="arch-use-cases" class="arch-usecase-grid"></div>
+                </section>
+
+                <section class="demo-panel arch-advisor-panel">
+                    <h4>Build Your Own CNN - Guided Advisor</h4>
+                    <p class="mini-meta">Answer a few practical questions and get a starter architecture with reasoning.</p>
+
+                    <div class="builder-grid">
+                        <div class="builder-field">
+                            <label for="arch-task">Task Type</label>
+                            <select id="arch-task">
+                                <option value="classification" selected>Image Classification</option>
+                                <option value="detection">Object Detection (backbone focus)</option>
+                                <option value="medical">Medical Imaging Classification</option>
+                                <option value="mobile">Mobile / Edge Vision</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label for="arch-data-size">Dataset Size</label>
+                            <select id="arch-data-size">
+                                <option value="small">Small (&lt; 10k images)</option>
+                                <option value="medium" selected>Medium (10k - 100k)</option>
+                                <option value="large">Large (&gt; 100k)</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label for="arch-latency">Latency Budget</label>
+                            <select id="arch-latency">
+                                <option value="strict">Strict (real-time)</option>
+                                <option value="balanced" selected>Balanced</option>
+                                <option value="relaxed">Relaxed</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label for="arch-hardware">Hardware</label>
+                            <select id="arch-hardware">
+                                <option value="cpu">CPU Only</option>
+                                <option value="single-gpu" selected>Single GPU</option>
+                                <option value="multi-gpu">Multi GPU</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="arch-generate-plan" class="btn btn-primary" type="button">Generate Architecture Plan</button>
+
+                    <div class="arch-plan-output" id="arch-plan-output">
+                        <p class="mini-meta">Choose your constraints and click Generate Architecture Plan.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Builder Modal -->
+    <div id="modal-builder" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>CNN Architecture Builder</h2>
+            <p>Create a compact CNN configuration and inspect estimated shape flow across layers.</p>
+            <div class="builder-grid">
+                <div class="builder-field">
+                    <label for="builder-input">Input Size</label>
+                    <select id="builder-input">
+                        <option value="28">28 x 28</option>
+                        <option value="32" selected>32 x 32</option>
+                        <option value="64">64 x 64</option>
+                    </select>
+                </div>
+                <div class="builder-field">
+                    <label for="builder-conv1">Conv1 Filters</label>
+                    <input id="builder-conv1" type="number" min="4" max="128" step="4" value="16">
+                </div>
+                <div class="builder-field">
+                    <label for="builder-conv2">Conv2 Filters</label>
+                    <input id="builder-conv2" type="number" min="4" max="256" step="4" value="32">
+                </div>
+                <div class="builder-field">
+                    <label for="builder-dense">Dense Units</label>
+                    <input id="builder-dense" type="number" min="16" max="512" step="16" value="64">
+                </div>
+            </div>
+            <button id="builder-generate" class="btn btn-primary" type="button">Generate Architecture</button>
+            <div id="builder-output" class="builder-output">
+                <div id="architecture-diagram" class="architecture-diagram">
+                    <!-- Visual diagram will be generated here -->
+                </div>
+                <div id="architecture-text" class="architecture-text">
+                    <p>Set values and click Generate Architecture.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/cnn-trainer.js') }}"></script>
+</body>
+</html>

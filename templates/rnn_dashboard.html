@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: RNN - Recurrent Neural Networks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rnn-dashboard.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-mark">DX</div>
+                <div class="logo-text">Deep LearnX</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <div class="menu-section">
+                <div class="menu-title">Navigation</div>
+                <a href="/" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"></path>
+                    </svg>
+                    <span class="menu-label">Dashboard</span>
+                </a>
+                <a href="/perceptron" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                        <line x1="12" y1="6" x2="12" y2="11"></line>
+                        <line x1="12" y1="13" x2="12" y2="18"></line>
+                    </svg>
+                    <span class="menu-label">Perceptrons</span>
+                </a>
+                <a href="/backpropogation" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h10"></path>
+                        <path d="M4 17h7"></path>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                    <span class="menu-label">Backpropagation</span>
+                </a>
+                <a href="/mlp" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="6" r="2"></circle>
+                        <circle cx="18" cy="6" r="2"></circle>
+                        <circle cx="6" cy="18" r="2"></circle>
+                        <circle cx="18" cy="18" r="2"></circle>
+                        <line x1="8" y1="6" x2="16" y2="6"></line>
+                        <line x1="6" y1="8" x2="6" y2="16"></line>
+                        <line x1="18" y1="8" x2="18" y2="16"></line>
+                        <line x1="8" y1="18" x2="16" y2="18"></line>
+                        <line x1="8" y1="8" x2="16" y2="16"></line>
+                    </svg>
+                    <span class="menu-label">MLP Studio</span>
+                </a>
+                <a href="/activation_functions" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 17c3-6 6-10 9-10s6 4 9 10"></path>
+                        <path d="M3 17h18"></path>
+                        <circle cx="12" cy="7" r="1"></circle>
+                    </svg>
+                    <span class="menu-label">Activation Functions</span>
+                </a>
+                <a href="/digit_detection" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <path d="M7 7h.01"></path>
+                        <path d="M11 7h.01"></path>
+                        <path d="M15 7h.01"></path>
+                        <path d="M7 11h.01"></path>
+                        <path d="M11 11h.01"></path>
+                        <path d="M15 11h.01"></path>
+                        <path d="M7 15h.01"></path>
+                        <path d="M11 15h.01"></path>
+                        <path d="M15 15h.01"></path>
+                    </svg>
+                    <span class="menu-label">Digit Detection</span>
+                </a>
+                <a href="/cnn" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="menu-label">CNN</span>
+                </a>
+                <a href="/opencv_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="8" height="8"></rect>
+                        <rect x="13" y="3" width="8" height="8"></rect>
+                        <rect x="8" y="13" width="8" height="8"></rect>
+                    </svg>
+                    <span class="menu-label">Objects Detection</span>
+                </a>
+                <a href="/rnn_project" class="menu-item active">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="12" r="2"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                        <path d="M8 12h4M14 12h4"></path>
+                    </svg>
+                    <span class="menu-label">RNN Training</span>
+                </a>
+                <a href="/sentiment_analysis" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                        <circle cx="8" cy="11" r="1.5"></circle>
+                        <circle cx="16" cy="11" r="1.5"></circle>
+                        <path d="M8 15c.5 1.5 2 2.5 4 2.5s3.5-1 4-2.5"></path>
+                    </svg>
+                    <span class="menu-label">Sentiment Analysis</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Learn about RNNs and sequence modeling...">
+            </div>
+        </div>
+
+        <div class="page-header rnn-header">
+            <div>
+                <h1>Project - Recurrent Neural Networks</h1>
+                <p>Understand RNN architecture, training process, and temporal dependencies with interactive visualizations</p>
+            </div>
+        </div>
+
+        <div class="content-wrapper rnn-wrapper">
+            <!-- Intro Strip -->
+            <section class="intro-strip">
+                <div class="intro-card">
+                    <h3>What is an RNN?</h3>
+                    <p>A Recurrent Neural Network is a deep learning architecture designed for sequential and time-series data. It maintains a hidden state that captures temporal context, allowing it to understand patterns across timesteps.</p>
+                </div>
+                <div class="intro-card">
+                    <h3>Real-World Analogy</h3>
+                    <p>Like reading a sentence word by word, an RNN doesn't just look at the current word—it remembers previous words to understand context. The hidden state acts like your short-term memory, constantly updated as you read.</p>
+                </div>
+            </section>
+
+            <!-- RNN Concepts Grid -->
+            <section class="rnn-cards-grid">
+                <article class="rnn-card" data-modal-target="modal-architecture">
+                    <div class="rnn-card-head">
+                        <h3>Understand RNN Architecture</h3>
+                        <span class="card-tag">Foundations</span>
+                    </div>
+                    <p>Visualize how RNNs process sequences and maintain temporal information through the hidden state.</p>
+                    <ul>
+                        <li>Network topology with recurrent connections</li>
+                        <li>Hidden state update mechanism</li>
+                        <li>Information flow across timesteps</li>
+                    </ul>
+                </article>
+
+                <article class="rnn-card" data-modal-target="modal-training">
+                    <div class="rnn-card-head">
+                        <h3>Interactive Training Lab</h3>
+                        <span class="card-tag">Hands-On Demo</span>
+                    </div>
+                    <p>Train an RNN model step-by-step with real-time visualizations of the learning process.</p>
+                    <ul>
+                        <li>Adjustable hyperparameters (hidden size, learning rate, epochs)</li>
+                        <li>Live loss curve and training metrics</li>
+                        <li>Hidden state activation heatmap</li>
+                    </ul>
+                </article>
+
+                <article class="rnn-card" data-modal-target="modal-forward-pass">
+                    <div class="rnn-card-head">
+                        <h3>Forward Pass Step-by-Step</h3>
+                        <span class="card-tag">Deep Dive</span>
+                    </div>
+                    <p>Watch how information flows through the network at each timestep with detailed computation.</p>
+                    <ul>
+                        <li>Timestep-by-timestep animation</li>
+                        <li>Input processing and hidden state evolution</li>
+                        <li>Output generation mechanism</li>
+                    </ul>
+                </article>
+
+                <article class="rnn-card" data-modal-target="modal-backprop">
+                    <div class="rnn-card-head">
+                        <h3>BPTT &amp; Learning Dynamics</h3>
+                        <span class="card-tag">Advanced Topic</span>
+                    </div>
+                    <p>Understand Backpropagation Through Time and how gradients flow backward through sequences.</p>
+                    <ul>
+                        <li>Gradient flow visualization</li>
+                        <li>Vanishing/exploding gradient problem</li>
+                        <li>Why RNNs need special training techniques</li>
+                    </ul>
+                </article>
+            </section>
+
+            <!-- Training Lab Modal -->
+            <div id="modal-training" class="modal">
+                <div class="modal-content modal-content-wide">
+                    <span class="close-button">&times;</span>
+                    <h2>Interactive Training Lab</h2>
+                    <p>Configure hyperparameters and train your RNN model. Watch as the network learns to predict sine wave sequences.</p>
+
+                    <div class="training-lab">
+                        <!-- Controls Panel -->
+                        <section class="demo-panel controls-panel">
+                            <h3>Training Configuration</h3>
+                            <div class="controls-grid">
+                                <div class="control-group">
+                                    <label for="hidden-size">Hidden Size (Memory Units):</label>
+                                    <div class="control-input-group">
+                                        <input id="hidden-size" type="range" min="4" max="32" value="8" step="2">
+                                        <span id="hidden-size-value" class="control-value">8</span>
+                                    </div>
+                                    <p class="control-hint">More units = stronger memory but slower training</p>
+                                </div>
+
+                                <div class="control-group">
+                                    <label for="learning-rate">Learning Rate (Step Size):</label>
+                                    <div class="control-input-group">
+                                        <input id="learning-rate" type="range" min="0.001" max="0.1" value="0.01" step="0.001">
+                                        <span id="learning-rate-value" class="control-value">0.01</span>
+                                    </div>
+                                    <p class="control-hint">Higher = faster convergence but may overshoot; lower = stable but slower</p>
+                                </div>
+
+                                <div class="control-group">
+                                    <label for="epochs">Number of Epochs (Training Iterations):</label>
+                                    <div class="control-input-group">
+                                        <input id="epochs" type="range" min="10" max="200" value="50" step="10">
+                                        <span id="epochs-value" class="control-value">50</span>
+                                    </div>
+                                    <p class="control-hint">More epochs = longer training but potentially better model</p>
+                                </div>
+                            </div>
+
+                            <div class="control-buttons">
+                                <button id="train-btn" class="btn btn-primary">Start Training</button>
+                                <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </section>
+
+                        <!-- Visualization Section -->
+                        <section class="visualization-section">
+                            <h3>Training Progress</h3>
+
+                            <!-- Architecture Info -->
+                            <div class="demo-panel architecture-panel">
+                                <h4>Architecture Snapshot</h4>
+                                <canvas id="architecture-canvas" width="800" height="280"></canvas>
+                                <p class="mini-meta">Recurrent Neural Network with temporal feedback connections</p>
+                            </div>
+
+                            <!-- Loss & Metrics -->
+                            <div class="metrics-grid">
+                                <div class="demo-panel">
+                                    <h4>Training Loss Curve</h4>
+                                    <canvas id="loss-canvas" width="400" height="250"></canvas>
+                                    <p class="mini-meta">Real-time loss during training</p>
+                                </div>
+
+                                <div class="demo-panel">
+                                    <h4>Hidden State Activation Heatmap</h4>
+                                    <canvas id="heatmap-canvas" width="400" height="250"></canvas>
+                                    <p class="mini-meta">Color intensity = activation strength (red=high, blue=low)</p>
+                                </div>
+                            </div>
+
+                            <!-- Training Statistics -->
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <span class="stat-label">Current Epoch</span>
+                                    <span class="stat-value" id="current-epoch">0</span>
+                                    <p class="stat-hint">Training progress</p>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Current Loss</span>
+                                    <span class="stat-value" id="current-loss">--</span>
+                                    <p class="stat-hint">Model error on current batch</p>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Final Loss</span>
+                                    <span class="stat-value" id="final-loss">--</span>
+                                    <p class="stat-hint">Lowest error achieved</p>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-label">Improvement %</span>
+                                    <span class="stat-value" id="improvement">--</span>
+                                    <p class="stat-hint">Reduction from initial loss</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Real-World Context -->
+                        <section class="demo-panel concept-box">
+                            <h4>What Is Happening Here?</h4>
+                            <p><strong>Real-world analogy:</strong> Imagine you're learning to predict the next number in a sine wave sequence. Each time you see a number, you update your internal understanding (hidden state). The network learns which patterns lead to which predictions.</p>
+                            <ul class="concept-list">
+                                <li><strong>Hidden State:</strong> The network's internal memory. It summarizes what the network has learned from previous timesteps.</li>
+                                <li><strong>Loss:</strong> How wrong the predictions are. Lower loss = better predictions.</li>
+                                <li><strong>Heatmap:</strong> Shows which memory units are most active. Brighter colors = more important for current prediction.</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Modal -->
+            <div id="modal-architecture" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>RNN Architecture Explained</h2>
+                    <p>Understanding how RNNs maintain and process sequential information.</p>
+
+                    <div class="architecture-lab">
+                        <section class="demo-panel">
+                            <h3>RNN Network Topology</h3>
+                            <canvas id="arch-diagram-canvas" width="800" height="400"></canvas>
+                        </section>
+
+                        <section class="demo-panel concept-box">
+                            <h3>Key Components</h3>
+                            <div class="component-grid">
+                                <div class="component">
+                                    <h4>Input Layer (x<sub>t</sub>)</h4>
+                                    <p>Receives data at each timestep. Example: a single number from a sequence.</p>
+                                    <p class="analogy">Like reading the current word in a sentence.</p>
+                                </div>
+                                <div class="component">
+                                    <h4>Hidden State (h<sub>t</sub>)</h4>
+                                    <p>The network's memory. It processes input combined with previous hidden state to capture temporal patterns.</p>
+                                    <p class="analogy">Like your current understanding so far.</p>
+                                </div>
+                                <div class="component">
+                                    <h4>Output Layer (y<sub>t</sub>)</h4>
+                                    <p>Produces predictions based on the current hidden state. Can be a value, probability, or classification.</p>
+                                    <p class="analogy">Represents your prediction of what comes next.</p>
+                                </div>
+                                <div class="component">
+                                    <h4>Recurrent Connection (W<sub>hh</sub>)</h4>
+                                    <p>Feeds the hidden state back into itself. This is what makes RNNs "recurrent" and able to process sequences.</p>
+                                    <p class="analogy">Acts as a memory feedback loop.</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="demo-panel">
+                            <h3>The Forward Pass Equations</h3>
+                            <div class="equations-strip">
+                                <div class="equation-item">
+                                    <h4>Hidden State Update:</h4>
+                                    <code>h<sub>t</sub> = tanh(W<sub>hh</sub>·h<sub>t-1</sub> + W<sub>xh</sub>·x<sub>t</sub> + b<sub>h</sub>)</code>
+                                    <p>Combines previous memory (h<sub>t-1</sub>) with new input (x<sub>t</sub>) through learned weights</p>
+                                </div>
+                                <div class="equation-item">
+                                    <h4>Output Prediction:</h4>
+                                    <code>y<sub>t</sub> = W<sub>hy</sub>·h<sub>t</sub> + b<sub>y</sub></code>
+                                    <p>Makes prediction from current hidden state</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forward Pass Modal -->
+            <div id="modal-forward-pass" class="modal">
+                <div class="modal-content modal-content-wide">
+                    <span class="close-button">&times;</span>
+                    <h2>Forward Pass Animation - Step by Step</h2>
+                    <p>Visualize how information flows through the network as it processes a sequence.</p>
+
+                    <div class="forward-pass-lab">
+                        <section class="demo-panel animation-controls-panel">
+                            <h3>Animation Controls</h3>
+                            <div class="animation-button-group">
+                                <button id="play-forward" class="btn btn-primary">Play Animation</button>
+                                <button id="step-forward" class="btn btn-secondary">Step Forward</button>
+                                <div id="timestep-display" class="timestep-display">Timestep: 0/3</div>
+                            </div>
+                        </section>
+
+                        <section class="demo-panel">
+                            <h4>Timestep-by-Timestep Computation</h4>
+                            <canvas id="forward-pass-canvas" width="1000" height="420"></canvas>
+                            <p class="mini-meta">Green = active node, Gray = inactive. Watch how information flows left to right through time.</p>
+                        </section>
+
+                        <section class="demo-panel concept-box">
+                            <h4>Reading the Visualization</h4>
+                            <ul class="concept-list">
+                                <li><strong>Timestep:</strong> Each column represents a different time point in the sequence.</li>
+                                <li><strong>Green nodes:</strong> Are receiving/processing information right now.</li>
+                                <li><strong>Arrows:</strong> Show data flow - from input → hidden → output, plus the recurrent loop.</li>
+                                <li><strong>Growing activation:</strong> The darker the node, the stronger its signal.</li>
+                            </ul>
+                        </section>
+
+                        <section class="demo-panel">
+                            <h3>Why This Matters</h3>
+                            <p><strong>The key insight:</strong> Notice how the hidden state (middle row) evolves across timesteps. It's accumulating information about the sequence pattern. By the final timestep, it has learned to represent the entire sequence context!</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BPTT Modal -->
+            <div id="modal-backprop" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2>Backpropagation Through Time (BPTT)</h2>
+                    <p>How gradients flow backward through the sequence to train the network.</p>
+
+                    <div class="bptt-lab">
+                        <section class="demo-panel concept-box">
+                            <h3>The BPTT Process</h3>
+                            <p>While normal backprop works backward through layers, BPTT works backward through <strong>time</strong>. Gradients must flow back through all timesteps in the sequence.</p>
+                            <ol class="process-list">
+                                <li><strong>Forward Pass:</strong> Process entire sequence, storing hidden states at each timestep</li>
+                                <li><strong>Compute Loss:</strong> Compare predictions to targets across all timesteps</li>
+                                <li><strong>Backward Pass (BPTT):</strong> Gradients flow backward from output → hidden → input, accumulating across time</li>
+                                <li><strong>Update Weights:</strong> Adjust W<sub>hh</sub>, W<sub>xh</sub>, W<sub>hy</sub> based on accumulated gradients</li>
+                            </ol>
+                        </section>
+
+                        <section class="demo-panel">
+                            <h3>The Challenge: Vanishing/Exploding Gradients</h3>
+                            <div class="problem-box">
+                                <h4>The Problem</h4>
+                                <p>As gradients flow backward through many timesteps, they can become extremely small (vanishing) or extremely large (exploding), making training impossible.</p>
+                                <ul>
+                                    <li><strong>Vanishing:</strong> Gradients → 0, network learns short-term patterns only</li>
+                                    <li><strong>Exploding:</strong> Gradients → ∞, training becomes unstable (NaN)</li>
+                                </ul>
+                            </div>
+                            <div class="solution-box">
+                                <h4>Common Solutions</h4>
+                                <ul>
+                                    <li><strong>Gradient Clipping:</strong> Cap gradient magnitude to prevent explosion</li>
+                                    <li><strong>LSTM/GRU:</strong> Gates control information flow, prevent vanishing gradients</li>
+                                    <li><strong>Layer Normalization:</strong> Stabilize gradient magnitudes</li>
+                                    <li><strong>Residual Connections:</strong> Create highways for gradients to skip timesteps</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section class="demo-panel">
+                            <h3>Mathematical Reference</h3>
+                            <div class="equations-strip">
+                                <div class="equation-item">
+                                    <h4>Gradient w.r.t. W<sub>hh</sub>:</h4>
+                                    <code>∂L/∂W<sub>hh</sub> = Σ<sub>t</sub> (∂L/∂h<sub>t</sub>) · (∂h<sub>t</sub>/∂W<sub>hh</sub>)</code>
+                                    <p>Sum of gradients from all timesteps (this is the chain rule through time!)</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/rnn-trainer.js') }}"></script>
+</body>
+</html>

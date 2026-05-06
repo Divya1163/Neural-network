@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activation Functions Lab - Deep LearnX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/activation-functions-dashboard.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-mark">DX</div>
+                <div class="logo-text">Deep LearnX</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <div class="menu-section">
+                <div class="menu-title">Navigation</div>
+                <a href="/" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"></path>
+                    </svg>
+                    <span class="menu-label">Dashboard</span>
+                </a>
+                <a href="/perceptron" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                        <line x1="12" y1="6" x2="12" y2="11"></line>
+                        <line x1="12" y1="13" x2="12" y2="18"></line>
+                    </svg>
+                    <span class="menu-label">Perceptrons</span>
+                </a>
+                <a href="/backpropogation" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h10"></path>
+                        <path d="M4 17h7"></path>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                    <span class="menu-label">Backpropagation</span>
+                </a>
+                <a href="/mlp" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="6" r="2"></circle>
+                        <circle cx="18" cy="6" r="2"></circle>
+                        <circle cx="6" cy="18" r="2"></circle>
+                        <circle cx="18" cy="18" r="2"></circle>
+                        <line x1="8" y1="6" x2="16" y2="6"></line>
+                        <line x1="6" y1="8" x2="6" y2="16"></line>
+                        <line x1="18" y1="8" x2="18" y2="16"></line>
+                        <line x1="8" y1="18" x2="16" y2="18"></line>
+                        <line x1="8" y1="8" x2="16" y2="16"></line>
+                    </svg>
+                    <span class="menu-label">MLP Studio</span>
+                </a>
+                <a href="/activation_functions" class="menu-item active">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 17c3-6 6-10 9-10s6 4 9 10"></path>
+                        <path d="M3 17h18"></path>
+                        <circle cx="12" cy="7" r="1"></circle>
+                    </svg>
+                    <span class="menu-label">Activation Functions</span>
+                </a>
+                <a href="/digit_detection" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <path d="M7 7h.01"></path>
+                        <path d="M11 7h.01"></path>
+                        <path d="M15 7h.01"></path>
+                        <path d="M7 11h.01"></path>
+                        <path d="M11 11h.01"></path>
+                        <path d="M15 11h.01"></path>
+                        <path d="M7 15h.01"></path>
+                        <path d="M11 15h.01"></path>
+                        <path d="M15 15h.01"></path>
+                    </svg>
+                    <span class="menu-label">Digit Detection</span>
+                </a>
+                <a href="/cnn" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="menu-label">CNN</span>
+                </a>
+                <a href="/opencv_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="8" height="8"></rect>
+                        <rect x="13" y="3" width="8" height="8"></rect>
+                        <rect x="8" y="13" width="8" height="8"></rect>
+                    </svg>
+                    <span class="menu-label">Objects Detection</span>
+                </a>
+                <a href="/rnn_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="12" r="2"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                        <path d="M8 12h4M14 12h4"></path>
+                    </svg>
+                    <span class="menu-label">RNN Training</span>
+                </a>
+                <a href="/sentiment_analysis" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                        <circle cx="8" cy="11" r="1.5"></circle>
+                        <circle cx="16" cy="11" r="1.5"></circle>
+                        <path d="M8 15c.5 1.5 2 2.5 4 2.5s3.5-1 4-2.5"></path>
+                    </svg>
+                    <span class="menu-label">Sentiment Analysis</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Explore activation behavior...">
+            </div>
+            <div class="topbar-actions">
+                <button class="icon-btn" title="Documentation">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="page-header dashboard-header">
+            <div>
+                <h1>Activation Functions Lab</h1>
+                <p>Interactively study how each activation transforms signals and gradients in a single-layer neural unit.</p>
+            </div>
+        </div>
+
+        <div class="content-wrapper dashboard-wrapper">
+            <section class="theory-strip">
+                <div class="theory-column">
+                    <h3>What Changes Here?</h3>
+                    <p>Weight and bias shift the pre-activation value, then each activation reshapes that signal differently.</p>
+                </div>
+                <div class="theory-column">
+                    <h3>Why Derivative Matters</h3>
+                    <p>The derivative controls gradient flow. Flat derivatives mean slow or stalled learning.</p>
+                </div>
+                <div class="theory-column">
+                    <h3>How To Explore</h3>
+                    <p>Open any activation card, tune parameters, inspect curve + derivative, and study toy dataset impact.</p>
+                </div>
+            </section>
+
+            <section class="trainers-section">
+                <div class="section-header">
+                    <h2>Activation Cards</h2>
+                    <p>Select an activation function to launch an interactive analysis panel.</p>
+                </div>
+
+                <article class="project-callout">
+                    <div>
+                        <h3>Project 2: MNIST Handwritten Digit Detection</h3>
+                        <p>Go beyond curves and run a full interactive single-layer project with binary and multiclass digit outputs, training controls, and upload prediction.</p>
+                    </div>
+                    <a href="/digit_detection" class="btn btn-primary">Open MNIST Project</a>
+                </article>
+
+                <div id="activationCards" class="activation-grid"></div>
+            </section>
+        </div>
+    </main>
+
+    <div id="activationModal" class="trainer-modal">
+        <div class="trainer-modal-content extra-wide">
+            <button class="modal-close" type="button">×</button>
+
+            <div class="modal-header">
+                <h2 id="modalTitle">Activation Analyzer</h2>
+                <p id="modalSubtitle">Tune values and inspect behavior in real time.</p>
+            </div>
+
+            <div class="trainer-form">
+                <div class="form-section">
+                    <div class="section-title">
+                        <span class="section-number">1</span>
+                        <h3>Interactive Parameters</h3>
+                    </div>
+
+                    <div class="params-grid five-col">
+                        <div class="param-field">
+                            <label for="weightInput">Weight</label>
+                            <input id="weightInput" type="number" step="0.1" value="1">
+                        </div>
+                        <div class="param-field">
+                            <label for="biasInput">Bias</label>
+                            <input id="biasInput" type="number" step="0.1" value="0">
+                        </div>
+                        <div class="param-field">
+                            <label for="alphaInput">Alpha (Leaky/ELU)</label>
+                            <input id="alphaInput" type="number" step="0.001" value="0.01">
+                        </div>
+                        <div class="param-field">
+                            <label for="xminInput">X Min</label>
+                            <input id="xminInput" type="number" step="0.5" value="-6">
+                        </div>
+                        <div class="param-field">
+                            <label for="xmaxInput">X Max</label>
+                            <input id="xmaxInput" type="number" step="0.5" value="6">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sampleInput">Sample Inputs (comma-separated)</label>
+                        <input id="sampleInput" type="text" value="-3,-1,0,1,3" placeholder="-2, -1, 0, 1, 2">
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="analyzeBtn" class="btn btn-primary" type="button">Analyze Activation</button>
+                    </div>
+
+                    <div id="analysisStatus" class="status-message">Open an activation card to begin.</div>
+                </div>
+
+                <div class="form-section" id="resultsSection" style="display: none;">
+                    <div class="section-title">
+                        <span class="section-number">2</span>
+                        <h3>Activation Behavior and Insights</h3>
+                    </div>
+
+                    <div class="results-summary" id="resultsSummary"></div>
+
+                    <div class="result-block two-chart-grid">
+                        <div>
+                            <h4>Activation Curve</h4>
+                            <div class="chart-container"><canvas id="activationChart" height="220"></canvas></div>
+                        </div>
+                        <div>
+                            <h4>Derivative Curve</h4>
+                            <div class="chart-container"><canvas id="derivativeChart" height="220"></canvas></div>
+                        </div>
+                    </div>
+
+                    <div class="result-block">
+                        <h4>Manual Formula Guide</h4>
+                        <div class="formula-card" id="formulaCard"></div>
+                    </div>
+
+                    <div class="result-block">
+                        <h4>Sample Input Table</h4>
+                        <div class="table-container">
+                            <table class="result-table" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Input</th>
+                                        <th>Pre-Activation z</th>
+                                        <th>Activation a</th>
+                                        <th>Derivative</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="result-block">
+                        <h4>Toy Dataset Impact</h4>
+                        <p class="block-hint">How this activation transforms a small centered feature set in a single-layer unit.</p>
+                        <div class="table-container">
+                            <table class="result-table" id="impactTable">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="result-block">
+                        <h4>When To Use It</h4>
+                        <ul class="insight-list" id="insightList"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="{{ url_for('static', filename='js/activation-functions-trainer.js') }}"></script>
+</body>
+</html>

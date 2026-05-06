@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Objects and Person Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/opencv-dashboard.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-mark">DX</div>
+                <div class="logo-text">Deep LearnX</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <div class="menu-section">
+                <div class="menu-title">Navigation</div>
+                <a href="/" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"></path>
+                    </svg>
+                    <span class="menu-label">Dashboard</span>
+                </a>
+                <a href="/perceptron" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                        <line x1="12" y1="6" x2="12" y2="11"></line>
+                        <line x1="12" y1="13" x2="12" y2="18"></line>
+                    </svg>
+                    <span class="menu-label">Perceptrons</span>
+                </a>
+                <a href="/backpropogation" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h10"></path>
+                        <path d="M4 17h7"></path>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                    <span class="menu-label">Backpropagation</span>
+                </a>
+                <a href="/mlp" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="6" r="2"></circle>
+                        <circle cx="18" cy="6" r="2"></circle>
+                        <circle cx="6" cy="18" r="2"></circle>
+                        <circle cx="18" cy="18" r="2"></circle>
+                        <line x1="8" y1="6" x2="16" y2="6"></line>
+                        <line x1="6" y1="8" x2="6" y2="16"></line>
+                        <line x1="18" y1="8" x2="18" y2="16"></line>
+                        <line x1="8" y1="18" x2="16" y2="18"></line>
+                        <line x1="8" y1="8" x2="16" y2="16"></line>
+                    </svg>
+                    <span class="menu-label">MLP Studio</span>
+                </a>
+                <a href="/activation_functions" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 17c3-6 6-10 9-10s6 4 9 10"></path>
+                        <path d="M3 17h18"></path>
+                        <circle cx="12" cy="7" r="1"></circle>
+                    </svg>
+                    <span class="menu-label">Activation Functions</span>
+                </a>
+                <a href="/digit_detection" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <path d="M7 7h.01"></path>
+                        <path d="M11 7h.01"></path>
+                        <path d="M15 7h.01"></path>
+                        <path d="M7 11h.01"></path>
+                        <path d="M11 11h.01"></path>
+                        <path d="M15 11h.01"></path>
+                        <path d="M7 15h.01"></path>
+                        <path d="M11 15h.01"></path>
+                        <path d="M15 15h.01"></path>
+                    </svg>
+                    <span class="menu-label">Digit Detection</span>
+                </a>
+                <a href="/cnn" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="menu-label">CNN</span>
+                </a>
+                <a href="/opencv_project" class="menu-item active">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="8" height="8"></rect>
+                        <rect x="13" y="3" width="8" height="8"></rect>
+                        <rect x="8" y="13" width="8" height="8"></rect>
+                    </svg>
+                    <span class="menu-label">Objects Detection</span>
+                </a>
+                <a href="/rnn_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="12" r="2"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                        <path d="M8 12h4M14 12h4"></path>
+                    </svg>
+                    <span class="menu-label">RNN Training</span>
+                </a>
+                <a href="/sentiment_analysis" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                        <circle cx="8" cy="11" r="1.5"></circle>
+                        <circle cx="16" cy="11" r="1.5"></circle>
+                        <path d="M8 15c.5 1.5 2 2.5 4 2.5s3.5-1 4-2.5"></path>
+                    </svg>
+                    <span class="menu-label">Sentiment Analysis</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Object + person detection with YOLOv8n">
+            </div>
+        </div>
+
+        <div class="page-header project-header clean-header">
+            <div>
+                <h1>Project - Objects and Person Detection Model</h1>
+                <p>Fast, simple, and practical: upload once or monitor live webcam with lightweight detection overlays.</p>
+            </div>
+            <div class="header-badges">
+                <span class="badge">YOLOv8n</span>
+                <span class="badge">OpenCV</span>
+                <span class="badge">Real-time Demo</span>
+            </div>
+        </div>
+
+        <div class="content-wrapper opencv-wrapper">
+            <section class="quick-strip">
+                <article class="quick-card">
+                    <h3>One-line Theory</h3>
+                    <p>YOLO predicts boxes + classes in one pass, then keeps high-confidence detections.</p>
+                </article>
+                <article class="quick-card">
+                    <h3>What You See</h3>
+                    <p>Live labels, confidence, and instant count of persons vs total objects.</p>
+                </article>
+                <article class="quick-card">
+                    <h3>Why It Feels Faster</h3>
+                    <p>Frames are compressed and resized before inference; overlay is drawn client-side.</p>
+                </article>
+            </section>
+
+            <section class="demo-panel">
+                <div class="panel-header">
+                    <h2>Live Demo</h2>
+                    <p>Choose mode and run detection.</p>
+                </div>
+
+                <div class="demo-controls compact">
+                    <div class="control-group slider-group">
+                        <label for="det-confidence">Confidence</label>
+                        <div class="inline-control">
+                            <input id="det-confidence" type="range" min="0.2" max="0.9" value="0.45" step="0.05">
+                            <span id="det-confidence-label">0.45</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="det-upload">Upload</label>
+                        <input id="det-upload" type="file" accept="image/*">
+                    </div>
+                    <div class="control-group toggle-group">
+                        <label>
+                            <input id="person-only" type="checkbox">
+                            Person only mode
+                        </label>
+                        <label>
+                            <input id="smooth-mode" type="checkbox" checked>
+                            Smooth mode
+                        </label>
+                    </div>
+                    <div class="control-group actions row-actions">
+                        <button id="start-webcam" class="btn btn-primary" type="button">Start Webcam</button>
+                        <button id="stop-webcam" class="btn btn-secondary" type="button">Stop</button>
+                    </div>
+                </div>
+
+                <div class="result-grid">
+                    <div class="view-card">
+                        <h4>Input</h4>
+                        <div class="video-wrap">
+                            <video id="webcam-input" autoplay playsinline muted></video>
+                            <canvas id="overlay-canvas"></canvas>
+                        </div>
+                        <img id="image-input-preview" alt="Input preview" />
+                    </div>
+                    <div class="view-card">
+                        <h4>Output</h4>
+                        <img id="detection-output" alt="Detection output" />
+                        <div class="metrics-row">
+                            <div class="metric-box">
+                                <span class="metric-label">Objects</span>
+                                <strong id="objects-count">0</strong>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-label">Persons</span>
+                                <strong id="persons-count">0</strong>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-label">Latency</span>
+                                <strong id="latency-ms">-- ms</strong>
+                            </div>
+                        </div>
+                        <p id="detection-summary">Ready. Upload or start webcam.</p>
+                    </div>
+                </div>
+
+                <canvas id="frame-capture-canvas"></canvas>
+            </section>
+
+            <section class="accordion-card">
+                <details>
+                    <summary>How the model thinks (quick theory)</summary>
+                    <p>Each frame is transformed into feature maps by convolutions. YOLO uses these features to predict box coordinates and class probabilities directly, then removes weak predictions using confidence filtering.</p>
+                </details>
+                <details>
+                    <summary>Where this is useful</summary>
+                    <p>Retail footfall, safety zone monitoring, traffic scenes, and lightweight surveillance dashboards.</p>
+                </details>
+            </section>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/opencv-trainer.js') }}"></script>
+</body>
+</html>

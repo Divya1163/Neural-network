@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perceptron Studio - Deep LearnX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perceptron-new.css') }}">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-mark">DX</div>
+                <div class="logo-text">Deep LearnX</div>
+            </div>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <div class="menu-section">
+                <div class="menu-title">Navigation</div>
+                <a href="/" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"></path>
+                    </svg>
+                    <span class="menu-label">Dashboard</span>
+                </a>
+                <a href="/perceptron" class="menu-item active">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                        <line x1="12" y1="6" x2="12" y2="11"></line>
+                        <line x1="12" y1="13" x2="12" y2="18"></line>
+                    </svg>
+                    <span class="menu-label">Perceptrons</span>
+                </a>
+                <a href="/backpropogation" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7h16"></path>
+                        <path d="M4 12h10"></path>
+                        <path d="M4 17h7"></path>
+                        <circle cx="18" cy="12" r="2"></circle>
+                    </svg>
+                    <span class="menu-label">Backpropagation</span>
+                </a>
+                <a href="/mlp" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="6" r="2"></circle>
+                        <circle cx="18" cy="6" r="2"></circle>
+                        <circle cx="6" cy="18" r="2"></circle>
+                        <circle cx="18" cy="18" r="2"></circle>
+                        <line x1="8" y1="6" x2="16" y2="6"></line>
+                        <line x1="6" y1="8" x2="6" y2="16"></line>
+                        <line x1="18" y1="8" x2="18" y2="16"></line>
+                        <line x1="8" y1="18" x2="16" y2="18"></line>
+                        <line x1="8" y1="8" x2="16" y2="16"></line>
+                    </svg>
+                    <span class="menu-label">MLP Studio</span>
+                </a>
+                <a href="/activation_functions" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 17c3-6 6-10 9-10s6 4 9 10"></path>
+                        <path d="M3 17h18"></path>
+                        <circle cx="12" cy="7" r="1"></circle>
+                    </svg>
+                    <span class="menu-label">Activation Functions</span>
+                </a>
+                <a href="/digit_detection" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <path d="M7 7h.01"></path>
+                        <path d="M11 7h.01"></path>
+                        <path d="M15 7h.01"></path>
+                        <path d="M7 11h.01"></path>
+                        <path d="M11 11h.01"></path>
+                        <path d="M15 11h.01"></path>
+                        <path d="M7 15h.01"></path>
+                        <path d="M11 15h.01"></path>
+                        <path d="M15 15h.01"></path>
+                    </svg>
+                    <span class="menu-label">Digit Detection</span>
+                </a>
+                <a href="/cnn" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span class="menu-label">CNN</span>
+                </a>
+                <a href="/opencv_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="8" height="8"></rect>
+                        <rect x="13" y="3" width="8" height="8"></rect>
+                        <rect x="8" y="13" width="8" height="8"></rect>
+                    </svg>
+                    <span class="menu-label">Objects Detection</span>
+                </a>
+                <a href="/rnn_project" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="12" r="2"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="18" cy="12" r="2"></circle>
+                        <path d="M8 12h4M14 12h4"></path>
+                    </svg>
+                    <span class="menu-label">RNN Training</span>
+                </a>
+                <a href="/sentiment_analysis" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                        <circle cx="8" cy="11" r="1.5"></circle>
+                        <circle cx="16" cy="11" r="1.5"></circle>
+                        <path d="M8 15c.5 1.5 2 2.5 4 2.5s3.5-1 4-2.5"></path>
+                    </svg>
+                    <span class="menu-label">Sentiment Analysis</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search perceptron docs...">
+            </div>
+            
+            <div class="topbar-actions">
+                <button class="icon-btn" title="Documentation">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header perceptron-page-header">
+            <div>
+                <h1>Perceptron Gate Studio</h1>
+                <p>Build intuition and validate behavior with AND, OR, and custom perceptron training in one analysis-first workspace.</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="document.querySelectorAll('.train-btn').forEach(btn => btn.click());">Train All Models</button>
+            </div>
+        </div>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper perceptron-shell">
+
+            <section class="studio-hero">
+                <div class="studio-hero-main">
+                    <p class="studio-kicker">Neural Fundamentals</p>
+                    <h2>Train and audit perceptrons like an engineer</h2>
+                    <p class="studio-subtitle">Start with simple gates, inspect each update, then generalize to your own linearly separable dataset. Every step is visible: weighted sum, activation, error, and parameter updates.</p>
+                    <div class="formula-ribbon">
+                        <span><strong>Forward:</strong> z = (w1 * x1) + (w2 * x2) + b</span>
+                        <span><strong>Activation:</strong> y_hat = 1 if z >= 0 else 0</span>
+                        <span><strong>Update:</strong> wj = wj + alpha * (y - y_hat) * xj</span>
+                    </div>
+                </div>
+                <aside class="studio-hero-side">
+                    <h3>Quick Workflow</h3>
+                    <ol>
+                        <li>Load dataset and set hyperparameters.</li>
+                        <li>Train and inspect epoch 1 walkthrough table.</li>
+                        <li>Analyze convergence and final decision state.</li>
+                        <li>Run predictions to verify model behavior.</li>
+                    </ol>
+                </aside>
+            </section>
+
+            <section class="concept-grid" aria-label="Perceptron concepts">
+                <article class="concept-card">
+                    <h3>What You Learn</h3>
+                    <p>How a linear classifier separates data with a learned hyperplane and why this works for AND and OR gates.</p>
+                </article>
+                <article class="concept-card">
+                    <h3>How To Read Results</h3>
+                    <p>Track total error by epoch, inspect weight vectors, and confirm convergence behavior for each model.</p>
+                </article>
+                <article class="concept-card">
+                    <h3>Where It Fails</h3>
+                    <p>Perceptrons solve linearly separable tasks only. Use this to understand why deeper networks became necessary.</p>
+                </article>
+            </section>
+
+            <!-- Gate Studio Grid -->
+            <section class="section studio-workspace">
+                <div class="section-header">
+                    <h2>Hands-on Training Workspace</h2>
+                    <p>Compare gate behaviors side-by-side and use the custom analyzer for your own experiments.</p>
+                </div>
+
+                <div class="gate-studio-grid">
+                <!-- AND GATE CARD -->
+                <article class="gate-card-pro" data-gate="and">
+                    <div class="gate-card-pro-header">
+                        <h3>AND Gate Model</h3>
+                        <span class="gate-pill">Ready Dataset</span>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="andData">Training Data (CSV)</label>
+                        <textarea id="andData" class="training-data" rows="5"></textarea>
+                    </div>
+
+                    <div class="parameter-grid-advanced">
+                        <div class="parameter-input">
+                            <label for="andLr">Learning Rate</label>
+                            <input type="number" id="andLr" min="0.001" max="1" step="0.001" value="1">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="andEpochs">Epochs</label>
+                            <input type="number" id="andEpochs" min="1" max="500" step="1" value="10">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="andWeights">Initial Weights</label>
+                            <input type="text" id="andWeights" value="0,0" placeholder="0,0">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="andBias">Initial Bias</label>
+                            <input type="number" id="andBias" step="0.01" value="0">
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button class="btn-primary train-btn" type="button" data-gate="and">Train AND Gate</button>
+                    </div>
+
+                    <div id="andStatus" class="info-box">Waiting for training.</div>
+
+                    <div class="workflow-block">
+                        <h4>Calculation Walkthrough (Epoch 1)</h4>
+                        <div id="andCalcSummary" class="mini-note">Train to view weighted sum, activation, and update rules.</div>
+                        <div class="table-wrap compact-table">
+                            <table class="data-table walkthrough-table" id="andWalkthroughTable">
+                                <thead>
+                                    <tr>
+                                        <th>Sample</th>
+                                        <th>z</th>
+                                        <th>Pred</th>
+                                        <th>Error</th>
+                                        <th>Delta W</th>
+                                        <th>Delta B</th>
+                                        <th>New W</th>
+                                        <th>New B</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="workflow-block">
+                        <h4>Epoch Results</h4>
+                        <div class="results-inline" id="andFinalSummary">Final weights: -, Final bias: -, Epochs: -, Converged: -</div>
+                        <div class="chart-wrap compact-chart">
+                            <canvas id="andChart" height="120"></canvas>
+                        </div>
+                        <div class="table-wrap compact-table">
+                            <table class="data-table" id="andEpochTable">
+                                <thead>
+                                    <tr>
+                                        <th>Epoch</th>
+                                        <th>Total Error</th>
+                                        <th>Weights</th>
+                                        <th>Bias</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="workflow-block">
+                        <h4>Prediction Center</h4>
+                        <div class="prediction-grid" id="andPredictionInputs"></div>
+                        <button class="btn-secondary predict-btn" type="button" data-gate="and">Predict</button>
+                        <div id="andPredictionStatus" class="info-box">Train the gate first.</div>
+                    </div>
+                </article>
+
+                <!-- OR GATE CARD -->
+                <article class="gate-card-pro" data-gate="or">
+                    <div class="gate-card-pro-header">
+                        <h3>OR Gate Model</h3>
+                        <span class="gate-pill">Ready Dataset</span>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="orData">Training Data (CSV)</label>
+                        <textarea id="orData" class="training-data" rows="5"></textarea>
+                    </div>
+
+                    <div class="parameter-grid-advanced">
+                        <div class="parameter-input">
+                            <label for="orLr">Learning Rate</label>
+                            <input type="number" id="orLr" min="0.001" max="1" step="0.001" value="1">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="orEpochs">Epochs</label>
+                            <input type="number" id="orEpochs" min="1" max="500" step="1" value="10">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="orWeights">Initial Weights</label>
+                            <input type="text" id="orWeights" value="0,0" placeholder="0,0">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="orBias">Initial Bias</label>
+                            <input type="number" id="orBias" step="0.01" value="0">
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button class="btn-primary train-btn" type="button" data-gate="or">Train OR Gate</button>
+                    </div>
+
+                    <div id="orStatus" class="info-box">Waiting for training.</div>
+
+                    <div class="workflow-block">
+                        <h4>Calculation Walkthrough (Epoch 1)</h4>
+                        <div id="orCalcSummary" class="mini-note">Train to view weighted sum, activation, and update rules.</div>
+                        <div class="table-wrap compact-table">
+                            <table class="data-table walkthrough-table" id="orWalkthroughTable">
+                                <thead>
+                                    <tr>
+                                        <th>Sample</th>
+                                        <th>z</th>
+                                        <th>Pred</th>
+                                        <th>Error</th>
+                                        <th>Delta W</th>
+                                        <th>Delta B</th>
+                                        <th>New W</th>
+                                        <th>New B</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="workflow-block">
+                        <h4>Epoch Results</h4>
+                        <div class="results-inline" id="orFinalSummary">Final weights: -, Final bias: -, Epochs: -, Converged: -</div>
+                        <div class="chart-wrap compact-chart">
+                            <canvas id="orChart" height="120"></canvas>
+                        </div>
+                        <div class="table-wrap compact-table">
+                            <table class="data-table" id="orEpochTable">
+                                <thead>
+                                    <tr>
+                                        <th>Epoch</th>
+                                        <th>Total Error</th>
+                                        <th>Weights</th>
+                                        <th>Bias</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="workflow-block">
+                        <h4>Prediction Center</h4>
+                        <div class="prediction-grid" id="orPredictionInputs"></div>
+                        <button class="btn-secondary predict-btn" type="button" data-gate="or">Predict</button>
+                        <div id="orPredictionStatus" class="info-box">Train the gate first.</div>
+                    </div>
+                </article>
+
+                <!-- CUSTOM GATE CARD -->
+                <article class="gate-card-pro gate-card-pro-wide" data-gate="custom">
+                    <div class="gate-card-pro-header">
+                        <h3>General Perceptron Analyzer</h3>
+                        <span class="gate-pill gate-pill-custom">Flexible Input</span>
+                    </div>
+
+                    <div class="field-group">
+                        <p class="helper-text">Supply custom features and labels to train a dimensional perceptron.</p>
+                        <label for="customData">Training Data (CSV Format)</label>
+                        <textarea id="customData" class="training-data" rows="6"></textarea>
+                    </div>
+
+                    <div class="parameter-grid-advanced">
+                        <div class="parameter-input">
+                            <label for="customLr">Learning Rate</label>
+                            <input type="number" id="customLr" min="0.001" max="1" step="0.001" value="0.1">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="customEpochs">Epochs</label>
+                            <input type="number" id="customEpochs" min="1" max="1000" step="1" value="50">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="customWeights">Initial Weights</label>
+                            <input type="text" id="customWeights" value="0,0" placeholder="0,0,...">
+                        </div>
+                        <div class="parameter-input">
+                            <label for="customBias">Initial Bias</label>
+                            <input type="number" id="customBias" step="0.01" value="0">
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button class="btn-secondary" id="loadCustomSampleBtn" type="button">Load Sample Custom Data</button>
+                        <button class="btn-primary train-btn" type="button" data-gate="custom">Train Custom Model</button>
+                    </div>
+
+                    <div id="customStatus" class="info-box">Waiting for training.</div>
+
+                    <div class="workflow-block">
+                        <h4>Calculation Walkthrough (Epoch 1)</h4>
+                        <div id="customCalcSummary" class="mini-note">Train to view weighted sum, activation, and update rules.</div>
+                        <div class="table-wrap compact-table">
+                            <table class="data-table walkthrough-table" id="customWalkthroughTable">
+                                <thead>
+                                    <tr>
+                                        <th>Sample</th>
+                                        <th>z</th>
+                                        <th>Pred</th>
+                                        <th>Error</th>
+                                        <th>Delta W</th>
+                                        <th>Delta B</th>
+                                        <th>New W</th>
+                                        <th>New B</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="workflow-block">
+                        <h4>Epoch Results</h4>
+                        <div class="results-inline" id="customFinalSummary">Final weights: -, Final bias: -, Epochs: -, Converged: -</div>
+                        <div class="chart-wrap compact-chart">
+                            <canvas id="customChart" height="120"></canvas>
+                        </div>
+                        <div class="table-wrap compact-table">
+                            <table class="data-table" id="customEpochTable">
+                                <thead>
+                                    <tr>
+                                        <th>Epoch</th>
+                                        <th>Total Error</th>
+                                        <th>Weights</th>
+                                        <th>Bias</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="workflow-block">
+                        <h4>Prediction Center</h4>
+                        <div class="prediction-grid" id="customPredictionInputs"></div>
+                        <button class="btn-secondary predict-btn" type="button" data-gate="custom">Predict</button>
+                        <div id="customPredictionStatus" class="info-box">Train the custom model first.</div>
+                    </div>
+                </article>
+                </div>
+            </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="{{ url_for('static', filename='js/gates-training.js') }}"></script>
+</body>
+</html>
