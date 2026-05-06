@@ -1,187 +1,304 @@
-"""Core perceptron logic used by the Flask backend."""
+"""Backpropagation engine for a tiny feedforward network (single hidden layer)."""
 
 from __future__ import annotations
 
-from typing import Dict, List, Sequence, Tuple
+import math
+from typing import Any
 
-BUILTIN_DATASETS: Dict[str, str] = {
-    "and": "x1,x2,label\n0,0,0\n0,1,0\n1,0,0\n1,1,1",
-    "or": "x1,x2,label\n0,0,0\n0,1,1\n1,0,1\n1,1,1",
-    "nand": "x1,x2,label\n0,0,1\n0,1,1\n1,0,1\n1,1,0",
+
+BUILTIN_DATASETS = {
+    "xor": "x1,x2,label\n0,0,0\n0,1,1\n1,0,1\n1,1,0",
 }
 
 
-def get_dataset_csv(gate_name: str) -> str:
-    key = gate_name.lower()
+def get_dataset_csv(dataset_name: str) -> str:
+    key = str(dataset_name or "").strip().lower()
     if key not in BUILTIN_DATASETS:
-        raise ValueError(f"Unknown built-in gate dataset: {gate_name}")
+        raise ValueError(f"Unknown backprop dataset '{dataset_name}'. Supported: {', '.join(BUILTIN_DATASETS.keys())}")
     return BUILTIN_DATASETS[key]
 
 
-def _parse_csv_rows(raw_csv: str) -> Tuple[List[str], List[List[float]]]:
-    if not raw_csv or not raw_csv.strip():
-        raise ValueError("Training data cannot be empty.")
-
-    lines = [line.strip() for line in raw_csv.splitlines() if line.strip()]
+def _parse_csv_dataset(dataset_csv: str) -> tuple[list[str], list[list[float]], list[float]]:
+    lines = [line.strip() for line in str(dataset_csv).replace("\r\n", "\n").split("\n") if line.strip()]
     if len(lines) < 2:
-        raise ValueError("Provide at least one header/data line and one data row.")
+        raise ValueError("Dataset must include header and at least one data row.")
 
-    first_tokens = [token.strip() for token in lines[0].split(",")]
-    has_header = not all(_is_finite_number(token) for token in first_tokens)
+    headers = [h.strip() for h in lines[0].split(",")]
+    if len(headers) < 2:
+        raise ValueError("Dataset must include at least one feature and one label column.")
 
-    if has_header:
-        headers = first_tokens
-        data_lines = lines[1:]
-    else:
-        data_lines = lines
-        width = len(first_tokens)
-        headers = [f"x{i + 1}" for i in range(width - 1)] + ["label"]
+    rows: list[list[float]] = []
+    labels: list[float] = []
 
-    rows: List[List[float]] = []
-    for row_idx, line in enumerate(data_lines, start=1):
-        tokens = [token.strip() for token in line.split(",")]
-        parsed_row: List[float] = []
+    for row_index, line in enumerate(lines[1:], start=2):
+        parts = [p.strip() for p in line.split(",")]
+        if len(parts) != len(headers):
+            raise ValueError(
+                f"Row {row_index} has {len(parts)} values but expected {len(headers)} based on header."
+            )
 
-        for col_idx, token in enumerate(tokens, start=1):
-            if not _is_finite_number(token):
-                raise ValueError(f"Non-numeric value at row {row_idx}, col {col_idx}.")
-            parsed_row.append(float(token))
+        numeric = [float(value) for value in parts]
+        rows.append(numeric[:-1])
+        labels.append(float(numeric[-1]))
 
-        rows.append(parsed_row)
-
-    _validate_rows(rows)
-    return headers, rows
+    return headers, rows, labels
 
 
-def _validate_rows(rows: Sequence[Sequence[float]]) -> None:
-    if not rows:
-        raise ValueError("No data rows found.")
-
-    width = len(rows[0])
-    if width < 2:
-        raise ValueError("Each row needs at least one feature and one label.")
-
-    for row_idx, row in enumerate(rows, start=1):
-        if len(row) != width:
-            raise ValueError(f"Column mismatch at row {row_idx}.")
-
-        label = row[-1]
-        if label not in (0.0, 1.0):
-            raise ValueError(f"Label at row {row_idx} must be 0 or 1.")
-
-
-def parse_initial_weights(raw_weights: Sequence[float] | str, feature_count: int) -> List[float]:
-    if isinstance(raw_weights, str):
-        parts = [p.strip() for p in raw_weights.split(",") if p.strip()]
-        values: List[float] = []
-        for idx, token in enumerate(parts, start=1):
-            if not _is_finite_number(token):
-                raise ValueError(f"Initial weight at position {idx} is not numeric.")
-            values.append(float(token))
-    else:
-        values = [float(v) for v in raw_weights]
-
-    if len(values) != feature_count:
-        raise ValueError(f"Initial weights must have exactly {feature_count} values.")
-
-    return values
+def _sigmoid(value: float) -> float:
+    return 1.0 / (1.0 + math.exp(-value))
 
 
 def train_from_csv(
     dataset_csv: str,
     learning_rate: float,
     epochs: int,
-    initial_weights: Sequence[float] | str,
-    initial_bias: float,
-) -> Dict[str, object]:
-    headers, rows = _parse_csv_rows(dataset_csv)
+    hidden_neurons: int,
+    initial_input_hidden: list[list[float]] | None = None,
+    initial_hidden_output: list[float] | None = None,
+    initial_hidden_bias: list[float] | None = None,
+    initial_output_bias: float | None = None,
+) -> dict[str, Any]:
+    headers, features, labels = _parse_csv_dataset(dataset_csv)
 
-    feature_count = len(rows[0]) - 1
-    x_data = [row[:feature_count] for row in rows]
-    y_data = [int(row[-1]) for row in rows]
+    if not features:
+        raise ValueError("Dataset has no training rows.")
 
-    weights = parse_initial_weights(initial_weights, feature_count)
-    bias = float(initial_bias)
+    feature_count = len(features[0])
+    if feature_count < 1:
+        raise ValueError("Dataset must include at least one feature column.")
 
-    epoch_history: List[Dict[str, object]] = []
-    walkthrough: List[Dict[str, object]] = []
+    if hidden_neurons < 1:
+        raise ValueError("hidden_neurons must be at least 1.")
 
-    for epoch in range(1, epochs + 1):
-        total_error = 0
+    for row in features:
+        if len(row) != feature_count:
+            raise ValueError("All rows must have the same number of features.")
 
-        for sample_idx, (x_row, y_true) in enumerate(zip(x_data, y_data), start=1):
-            z_value = _dot(weights, x_row) + bias
-            prediction = 1 if z_value >= 0 else 0
-            error = y_true - prediction
+    if initial_input_hidden and len(initial_input_hidden) != hidden_neurons:
+        raise ValueError("initial_input_hidden row count must match hidden_neurons.")
 
-            delta_weights = [learning_rate * error * x_row[i] for i in range(feature_count)]
-            for i in range(feature_count):
-                weights[i] += delta_weights[i]
+    if initial_hidden_output and len(initial_hidden_output) != hidden_neurons:
+        raise ValueError("initial_hidden_output length must match hidden_neurons.")
 
-            delta_bias = learning_rate * error
-            bias += delta_bias
-            total_error += abs(error)
+    if initial_hidden_bias and len(initial_hidden_bias) != hidden_neurons:
+        raise ValueError("initial_hidden_bias length must match hidden_neurons.")
+
+    # Initialize weights deterministically when not provided.
+    weights_input_hidden: list[list[float]] = []
+    for h in range(hidden_neurons):
+        if initial_input_hidden:
+            row = [float(v) for v in initial_input_hidden[h]]
+            if len(row) != feature_count:
+                raise ValueError("Each initial_input_hidden row must match feature count.")
+            weights_input_hidden.append(row)
+        else:
+            row = []
+            for f in range(feature_count):
+                row.append(0.10 + 0.05 * (h * feature_count + f + 1))
+            weights_input_hidden.append(row)
+
+    if initial_hidden_output:
+        weights_hidden_output = [float(v) for v in initial_hidden_output]
+    else:
+        weights_hidden_output = [0.20 + 0.05 * (h + 1) for h in range(hidden_neurons)]
+
+    if initial_hidden_bias:
+        bias_hidden = [float(v) for v in initial_hidden_bias]
+    else:
+        bias_hidden = [0.35 for _ in range(hidden_neurons)]
+
+    if initial_output_bias is not None:
+        bias_output = float(initial_output_bias)
+    else:
+        bias_output = 0.60
+
+    epoch_history: list[dict[str, Any]] = []
+    walkthrough: list[dict[str, Any]] = []
+
+    for epoch in range(1, int(epochs) + 1):
+        total_squared_error = 0.0
+
+        for sample_index, sample in enumerate(features, start=1):
+            target = labels[sample_index - 1]
+
+            hidden_nets: list[float] = []
+            hidden_outputs: list[float] = []
+
+            for h in range(hidden_neurons):
+                net_h = bias_hidden[h]
+                for f in range(feature_count):
+                    net_h += sample[f] * weights_input_hidden[h][f]
+                out_h = _sigmoid(net_h)
+                hidden_nets.append(net_h)
+                hidden_outputs.append(out_h)
+
+            output_net = bias_output
+            for h in range(hidden_neurons):
+                output_net += hidden_outputs[h] * weights_hidden_output[h]
+            output = _sigmoid(output_net)
+
+            error_output = target - output
+            total_squared_error += error_output * error_output
+
+            delta_output = error_output * output * (1.0 - output)
+
+            delta_hidden: list[float] = []
+            for h in range(hidden_neurons):
+                err_h = delta_output * weights_hidden_output[h]
+                delta_h = err_h * hidden_outputs[h] * (1.0 - hidden_outputs[h])
+                delta_hidden.append(delta_h)
+
+            old_weights_hidden_output = weights_hidden_output[:]
+            old_bias_output = bias_output
+            old_weights_input_hidden = [row[:] for row in weights_input_hidden]
+            old_bias_hidden = bias_hidden[:]
+
+            delta_weights_hidden_output: list[float] = []
+            for h in range(hidden_neurons):
+                delta_w = float(learning_rate) * delta_output * hidden_outputs[h]
+                weights_hidden_output[h] += delta_w
+                delta_weights_hidden_output.append(delta_w)
+
+            delta_bias_output = float(learning_rate) * delta_output
+            bias_output += delta_bias_output
+
+            delta_weights_input_hidden: list[list[float]] = []
+            for h in range(hidden_neurons):
+                delta_row: list[float] = []
+                for f in range(feature_count):
+                    delta_w = float(learning_rate) * delta_hidden[h] * sample[f]
+                    weights_input_hidden[h][f] += delta_w
+                    delta_row.append(delta_w)
+                delta_weights_input_hidden.append(delta_row)
+
+            delta_bias_hidden: list[float] = []
+            for h in range(hidden_neurons):
+                delta_b = float(learning_rate) * delta_hidden[h]
+                bias_hidden[h] += delta_b
+                delta_bias_hidden.append(delta_b)
 
             if epoch == 1:
                 walkthrough.append(
                     {
-                        "sample_index": sample_idx,
-                        "sample": list(x_row),
-                        "label": y_true,
-                        "z": z_value,
-                        "prediction": prediction,
-                        "error": error,
-                        "delta_weights": list(delta_weights),
-                        "delta_bias": delta_bias,
-                        "new_weights": list(weights),
-                        "new_bias": bias,
+                        "sample_index": sample_index,
+                        "sample": [float(v) for v in sample],
+                        "label": float(target),
+                        "hidden_outputs": [float(v) for v in hidden_outputs],
+                        "output": float(output),
+                        "error": float(error_output),
+                        "delta_output": float(delta_output),
+                        "delta_hidden": [float(v) for v in delta_hidden],
+                        "delta_weights_hidden_output": [float(v) for v in delta_weights_hidden_output],
+                        "delta_bias_output": float(delta_bias_output),
+                        "old_weights_hidden_output": [float(v) for v in old_weights_hidden_output],
+                        "new_weights_hidden_output": [float(v) for v in weights_hidden_output],
+                        "old_bias_output": float(old_bias_output),
+                        "new_bias_output": float(bias_output),
+                        "old_weights_input_hidden": [[float(v) for v in row] for row in old_weights_input_hidden],
+                        "new_weights_input_hidden": [[float(v) for v in row] for row in weights_input_hidden],
+                        "old_bias_hidden": [float(v) for v in old_bias_hidden],
+                        "new_bias_hidden": [float(v) for v in bias_hidden],
+                        "delta_weights_input_hidden": [[float(v) for v in row] for row in delta_weights_input_hidden],
+                        "delta_bias_hidden": [float(v) for v in delta_bias_hidden],
                     }
                 )
+
+        mse = total_squared_error / len(features)
 
         epoch_history.append(
             {
                 "epoch": epoch,
-                "total_error": total_error,
-                "weights": list(weights),
-                "bias": bias,
+                "mse": float(mse),
+                "weights_hidden_output": [float(v) for v in weights_hidden_output],
+                "weights_input_hidden_flat": [
+                    float(v)
+                    for row in weights_input_hidden
+                    for v in row
+                ],
+                "bias_hidden": [float(v) for v in bias_hidden],
+                "bias_output": float(bias_output),
             }
         )
 
-        if total_error == 0:
-            break
+    predictions: list[dict[str, Any]] = []
+    for idx, sample in enumerate(features):
+        pred = predict_from_model(
+            weights_input_hidden=weights_input_hidden,
+            weights_hidden_output=weights_hidden_output,
+            bias_hidden=bias_hidden,
+            bias_output=bias_output,
+            inputs=sample,
+        )
+        predictions.append(
+            {
+                "sample": [float(v) for v in sample],
+                "target": float(labels[idx]),
+                "probability": float(pred["probability"]),
+                "class": int(pred["prediction"]),
+            }
+        )
 
-    converged = epoch_history[-1]["total_error"] == 0
+    final_mse = epoch_history[-1]["mse"] if epoch_history else 0.0
+
     return {
         "headers": headers,
         "feature_count": feature_count,
-        "final_weights": list(weights),
-        "final_bias": bias,
+        "hidden_neurons": hidden_neurons,
+        "epochs_trained": int(epochs),
+        "learning_rate": float(learning_rate),
         "epoch_history": epoch_history,
         "walkthrough": walkthrough,
-        "epochs_trained": len(epoch_history),
-        "converged": converged,
+        "predictions": predictions,
+        "final_mse": float(final_mse),
+        "converged": bool(final_mse < 0.05),
+        "final_params": {
+            "weights_input_hidden": [[float(v) for v in row] for row in weights_input_hidden],
+            "weights_hidden_output": [float(v) for v in weights_hidden_output],
+            "bias_hidden": [float(v) for v in bias_hidden],
+            "bias_output": float(bias_output),
+        },
     }
 
 
-def predict_from_model(weights: Sequence[float], bias: float, inputs: Sequence[float]) -> Dict[str, float | int]:
-    if len(weights) != len(inputs):
-        raise ValueError("Input length must match number of model weights.")
+def predict_from_model(
+    weights_input_hidden: list[list[float]],
+    weights_hidden_output: list[float],
+    bias_hidden: list[float],
+    bias_output: float,
+    inputs: list[float],
+) -> dict[str, Any]:
+    sample = [float(v) for v in inputs]
+    if not weights_input_hidden:
+        raise ValueError("weights_input_hidden is required.")
 
-    z_value = _dot(weights, inputs) + bias
-    prediction = 1 if z_value >= 0 else 0
-    return {"z": z_value, "prediction": prediction}
+    feature_count = len(weights_input_hidden[0])
+    if len(sample) != feature_count:
+        raise ValueError(f"inputs length ({len(sample)}) must match feature_count ({feature_count}).")
 
+    hidden_neurons = len(weights_input_hidden)
 
-def _dot(left: Sequence[float], right: Sequence[float]) -> float:
-    total = 0.0
-    for lv, rv in zip(left, right):
-        total += lv * rv
-    return total
+    if len(weights_hidden_output) != hidden_neurons:
+        raise ValueError("weights_hidden_output length must match hidden layer size.")
+    if len(bias_hidden) != hidden_neurons:
+        raise ValueError("bias_hidden length must match hidden layer size.")
 
+    hidden_outputs: list[float] = []
+    for h in range(hidden_neurons):
+        net_h = float(bias_hidden[h])
+        for f in range(feature_count):
+            net_h += sample[f] * float(weights_input_hidden[h][f])
+        hidden_outputs.append(_sigmoid(net_h))
 
-def _is_finite_number(text: str) -> bool:
-    try:
-        value = float(text)
-    except ValueError:
-        return False
-    return value == value and value not in (float("inf"), float("-inf"))
+    output_net = float(bias_output)
+    for h in range(hidden_neurons):
+        output_net += hidden_outputs[h] * float(weights_hidden_output[h])
+
+    probability = _sigmoid(output_net)
+    prediction = 1 if probability >= 0.5 else 0
+
+    return {
+        "inputs": sample,
+        "probability": float(probability),
+        "prediction": int(prediction),
+        "hidden_outputs": [float(v) for v in hidden_outputs],
+    }
