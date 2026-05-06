@@ -1,0 +1,11 @@
+Flask
+Werkzeug
+numpy
+pandas
+scikit-learn
+matplotlib
+Pillow
+opencv-python
+ultralytics
+tensorflow
+scikit-image
