@@ -1,0 +1,51 @@
+"""
+CNN Module - Convolutional Neural Networks
+Provides core convolution, pooling, and activation visualization functions
+"""
+
+from .engine import (
+    manual_convolution_2d,
+    max_pooling_2d,
+    avg_pooling_2d,
+    relu,
+    visualize_convolution_operation,
+    visualize_pooling_comparison,
+    visualize_multiple_filters,
+    visualize_relu_effect,
+    generate_sample_image,
+    generate_filter_kernels,
+    perform_convolution_demo,
+    perform_pooling_demo,
+    perform_activation_demo,
+    process_image_upload,
+    visualize_image_tensor,
+    visualize_rgb_channels,
+    apply_convolution_on_upload,
+    apply_multiple_filters,
+    apply_relu_comparison,
+    apply_pooling_on_upload,
+    perform_image_convolution_lab,
+)
+__all__ = [
+    'manual_convolution_2d',
+    'max_pooling_2d',
+    'avg_pooling_2d',
+    'relu',
+    'visualize_convolution_operation',
+    'visualize_pooling_comparison',
+    'visualize_multiple_filters',
+    'visualize_relu_effect',
+    'generate_sample_image',
+    'generate_filter_kernels',
+    'perform_convolution_demo',
+    'perform_pooling_demo',
+    'perform_activation_demo',
+    'process_image_upload',
+    'visualize_image_tensor',
+    'visualize_rgb_channels',
+    'apply_convolution_on_upload',
+    'apply_multiple_filters',
+    'apply_relu_comparison',
+    'apply_pooling_on_upload',
+    'perform_image_convolution_lab',
+]
